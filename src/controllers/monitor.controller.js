@@ -16,11 +16,21 @@ exports.create = (req, res) => {
   if (req.body.constructor === Object && Object.keys(req.body).length === 0) {
     res.status(400).send({ error: true, message: "All fields are requireds" });
   } else {
-    Monitor.create(req.body, (err, monitor) => {
+    Monitor.first_name = req.body.first_name;
+    Monitor.last_name = req.body.last_name;
+    Monitor.career = req.body.career;
+    Monitor.semester = req.body.semester;
+    Monitor.identification = req.body.identification;
+    Monitor.phonenumber = req.body.phonenumber;
+    Monitor.email = req.body.email;
+
+    Monitor.create((err, monitor) => {
       if (err) {
         res.send(err);
       } else {
-        res.json({ error: false, message: "Monitor created", data: monitor });
+        res
+          .status(201)
+          .json({ error: false, message: "Monitor created", data: monitor });
       }
     });
   }
@@ -40,22 +50,44 @@ exports.update = (req, res) => {
   if (req.body.constructor === Object && Object.keys(req.body).length === 0) {
     res.status(400).send({ error: true, message: "All fields are requireds" });
   } else {
-    Monitor.update(req.params.id, req.body, (err, monitor) => {
-      if (err) {
-        res.send(err);
+    Monitor.findById(req.params.id, (err, found) => {
+      if (found.length === 0) {
+        res.json({ error: true, message: `Monitor doesn't exists` });
       } else {
-        res.json(monitor);
+        Monitor.first_name = req.body.first_name;
+        Monitor.last_name = req.body.last_name;
+        Monitor.career = req.body.career;
+        Monitor.semester = req.body.semester;
+        Monitor.identification = req.body.identification;
+        Monitor.phonenumber = req.body.phonenumber;
+        Monitor.email = req.body.email;
+        Monitor.id = req.params.id;
+
+        Monitor.update((err, monitor) => {
+          if (err) {
+            res.send(err);
+          } else {
+            res.json(monitor);
+          }
+        });
       }
     });
   }
 };
 
 exports.delete = (req, res) => {
-  Monitor.delete(req.params.id, (err, monitor) => {
-    if (err) {
-      res.send(err);
+  Monitor.findById(req.params.id, (err, found) => {
+    if (found.length === 0) {
+      res.json({ error: true, message: `Monitor doesn't exists` });
     } else {
-      res.json({ error: false, message: "Success deleting " });
+      Monitor.id = req.params.id;
+      Monitor.delete((err, monitor) => {
+        if (err) {
+          res.send(err);
+        } else {
+          res.json({ error: false, message: "Success deleting " });
+        }
+      });
     }
   });
 };
