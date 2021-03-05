@@ -25,7 +25,7 @@ exports.create = (req, res) => {
       if (err) {
         res.send(err);
       } else {
-        res.send(201).json({
+        res.status(201).json({
           error: false,
           message: "Monitoring created",
           data: monitoring,
