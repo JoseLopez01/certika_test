@@ -13,8 +13,10 @@ app.get("/", (req, res) => {
 });
 
 const monitorRoutes = require("./src/routes/monitor.routes");
+app.use("/api/monitor", monitorRoutes);
 
-app.use('/api/monitor', monitorRoutes)
+const monitoringRoutes = require("./src/routes/monitoring.routes");
+app.use("/api/monitoring", monitoringRoutes);
 
 app.listen(port, () => {
   console.log("Server is listening on port " + port);

@@ -3,8 +3,8 @@
 var db = require("./../../config/db.config");
 
 class Monitor {
-  static first_name;
-  static last_name;
+  static firstname;
+  static lastname;
   static career;
   static semester;
   static identification;
@@ -16,29 +16,29 @@ class Monitor {
 
   static create(result) {
     const newMonitor = {
-      first_name: this.first_name,
-      last_name: this.last_name,
+      firstname: this.firstname,
+      lastname: this.lastname,
       career: this.career,
       semester: this.semester,
       identification: this.identification,
       phonenumber: this.phonenumber,
       email: this.email,
     };
-    db.query("INSERT INTO monitores set ?", newMonitor, (err, res) => {
+    db.query("INSERT INTO monitors set ?", newMonitor, (err, res) => {
       if (err) result(err, null);
       result(null, res.insertId);
     });
   }
 
   static findById(id, result) {
-    db.query("SELECT * FROM monitores WHERE id = ?", id, (err, res) => {
+    db.query("SELECT * FROM monitors WHERE id = ?", id, (err, res) => {
       if (err) result(err, null);
       result(null, res);
     });
   }
 
   static findAll(result) {
-    db.query("SELECT * FROM monitores", (err, res) => {
+    db.query("SELECT * FROM monitors", (err, res) => {
       if (err) result(err, null);
       result(null, res);
     });
@@ -46,10 +46,10 @@ class Monitor {
 
   static update(result) {
     const query =
-      "UPDATE monitores SET first_name = ?, last_name = ?, career = ?, semester = ?, identification = ?, phonenumber = ?, email = ? WHERE id = ?";
+      "UPDATE monitors SET firstname = ?, lastname = ?, career = ?, semester = ?, identification = ?, phonenumber = ?, email = ? WHERE id = ?";
     const fields = [
-      this.first_name,
-      this.last_name,
+      this.firstname,
+      this.lastname,
       this.career,
       this.semester,
       this.identification,
@@ -67,7 +67,7 @@ class Monitor {
   }
 
   static delete(result) {
-    db.query("DELETE FROM monitores WHERE id = ?", [this.id], (err, res) => {
+    db.query("DELETE FROM monitors WHERE id = ?", [this.id], (err, res) => {
       if (err) result(err, null);
       result(null, res);
     });

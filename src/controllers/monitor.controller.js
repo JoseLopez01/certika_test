@@ -16,8 +16,8 @@ exports.create = (req, res) => {
   if (req.body.constructor === Object && Object.keys(req.body).length === 0) {
     res.status(400).send({ error: true, message: "All fields are requireds" });
   } else {
-    Monitor.first_name = req.body.first_name;
-    Monitor.last_name = req.body.last_name;
+    Monitor.firstname = req.body.firstname;
+    Monitor.lastname = req.body.lastname;
     Monitor.career = req.body.career;
     Monitor.semester = req.body.semester;
     Monitor.identification = req.body.identification;
@@ -54,8 +54,8 @@ exports.update = (req, res) => {
       if (found.length === 0) {
         res.json({ error: true, message: `Monitor doesn't exists` });
       } else {
-        Monitor.first_name = req.body.first_name;
-        Monitor.last_name = req.body.last_name;
+        Monitor.firstname = req.body.firstname;
+        Monitor.lastname = req.body.lastname;
         Monitor.career = req.body.career;
         Monitor.semester = req.body.semester;
         Monitor.identification = req.body.identification;
