@@ -30,7 +30,7 @@ exports.create = (req, res) => {
       } else {
         res
           .status(201)
-          .json({ error: false, message: "Monitor created", data: monitor });
+          .json({ error: false, message: "Monitor created", data: [monitor] });
       }
     });
   }
@@ -41,7 +41,7 @@ exports.findById = (req, res) => {
     if (err) {
       res.send(err);
     } else {
-      res.json(monitor);
+      res.json({ error: false, message: "", data: monitor });
     }
   });
 };
@@ -52,7 +52,7 @@ exports.update = (req, res) => {
   } else {
     Monitor.findById(req.params.id, (err, found) => {
       if (found.length === 0) {
-        res.json({ error: true, message: `Monitor doesn't exists` });
+        res.json({ error: true, message: `Monitor doesn't exists`, data: [] });
       } else {
         Monitor.firstname = req.body.firstname;
         Monitor.lastname = req.body.lastname;
@@ -67,7 +67,7 @@ exports.update = (req, res) => {
           if (err) {
             res.send(err);
           } else {
-            res.json(monitor);
+            res.json({ error: false, message: "Success updating", data: [] });
           }
         });
       }
@@ -78,14 +78,14 @@ exports.update = (req, res) => {
 exports.delete = (req, res) => {
   Monitor.findById(req.params.id, (err, found) => {
     if (found.length === 0) {
-      res.json({ error: true, message: `Monitor doesn't exists` });
+      res.json({ error: true, message: `Monitor doesn't exists`, data: [] });
     } else {
       Monitor.id = req.params.id;
       Monitor.delete((err, monitor) => {
         if (err) {
           res.send(err);
         } else {
-          res.json({ error: false, message: "Success deleting " });
+          res.json({ error: false, message: "Success deleting", data: [] });
         }
       });
     }

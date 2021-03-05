@@ -15,11 +15,15 @@ exports.findAll = (req, res) => {
 
 exports.create = (req, res) => {
   if (req.body.constructor === Object && Object.keys(req.body).length === 0) {
-    res.status(400).send({ error: true, message: "All fields are requireds " });
+    res
+      .status(400)
+      .send({ error: true, message: "All fields are requireds", data: [] });
   } else {
     Monitor.findById(req.body.monitorid, (err, monitor) => {
       if (monitor.length === 0) {
-        res.status(404).json({ error: true, message: "Monitor not found" });
+        res
+          .status(404)
+          .json({ error: true, message: "Monitor not found", data: [] });
       } else {
         Monitoring.monitorid = req.body.monitorid;
         Monitoring.class = req.body.class;
@@ -33,7 +37,7 @@ exports.create = (req, res) => {
             res.status(201).json({
               error: false,
               message: "Monitoring created",
-              data: monitoring,
+              data: [monitoring],
             });
           }
         });
@@ -47,22 +51,28 @@ exports.findById = (req, res) => {
     if (err) {
       res.send(err);
     } else {
-      res.json(monitoring);
+      res.json({ error: false, message: "", data: monitoring });
     }
   });
 };
 
 exports.update = (req, res) => {
   if (req.body.constructor === Object && Object.keys(req.body).length === 0) {
-    res.status(400).send({ error: true, message: "All fields are requireds" });
+    res
+      .status(400)
+      .send({ error: true, message: "All fields are requireds", data: [] });
   } else {
     Monitor.findById(req.body.monitorid, (err, monitor) => {
       if (monitor.length === 0) {
-        res.status(404).json({ error: true, message: "Monitor not found" });
+        res
+          .status(404)
+          .json({ error: true, message: "Monitor not found", data: [] });
       } else {
         Monitoring.findById(req.params.id, (err, found) => {
           if (found.length === 0) {
-            res.status(404).json({ error: true, message: "Monitoring not found" });
+            res
+              .status(404)
+              .json({ error: true, message: "Monitoring not found", data: [] });
           } else {
             Monitoring.id = req.params.id;
             Monitoring.monitorid = req.body.monitorid;
@@ -74,7 +84,11 @@ exports.update = (req, res) => {
               if (err) {
                 res.send(err);
               } else {
-                res.json(monitoring);
+                res.json({
+                  error: false,
+                  message: "Success updating",
+                  data: [],
+                });
               }
             });
           }
@@ -87,14 +101,14 @@ exports.update = (req, res) => {
 exports.delete = (req, res) => {
   Monitoring.findById(req.params.id, (err, found) => {
     if (found.length === 0) {
-      res.json({ error: true, message: "Monitoring not found" });
+      res.json({ error: true, message: "Monitoring not found", data: [] });
     } else {
       Monitoring.id = req.params.id;
       Monitoring.delete((err, monitoring) => {
         if (err) {
           res.send(err);
         } else {
-          res.json({ error: true, message: "Sucess deleting" });
+          res.json({ error: true, message: "Sucess deleting", data: [] });
         }
       });
     }
