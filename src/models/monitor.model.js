@@ -25,22 +25,31 @@ class Monitor {
       email: this.email,
     };
     db.query("INSERT INTO monitors set ?", newMonitor, (err, res) => {
-      if (err) result(err, null);
-      result(null, res.insertId);
+      if (err) {
+        result(err, null);
+      } else {
+        result(null, res.insertId);
+      }
     });
   }
 
   static findById(id, result) {
     db.query("SELECT * FROM monitors WHERE id = ?", id, (err, res) => {
-      if (err) result(err, null);
-      result(null, res);
+      if (err) {
+        result(err, null);
+      } else {
+        result(null, res);
+      }
     });
   }
 
   static findAll(result) {
     db.query("SELECT * FROM monitors", (err, res) => {
-      if (err) result(err, null);
-      result(null, res);
+      if (err) {
+        result(err, null);
+      } else {
+        result(null, res);
+      }
     });
   }
 
@@ -68,8 +77,11 @@ class Monitor {
 
   static delete(result) {
     db.query("DELETE FROM monitors WHERE id = ?", [this.id], (err, res) => {
-      if (err) result(err, null);
-      result(null, res);
+      if (err) {
+        result(err, null);
+      } else {
+        result(null, res);
+      }
     });
   }
 }
