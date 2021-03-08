@@ -29,6 +29,7 @@ exports.create = (req, res) => {
         Monitoring.class = req.body.class;
         Monitoring.monitoringdate = req.body.monitoringdate;
         Monitoring.classroom = req.body.classroom;
+        Monitoring.monitoringhour = req.body.monitoringhour;
 
         Monitoring.create((err, monitoring) => {
           if (err) {
@@ -79,6 +80,7 @@ exports.update = (req, res) => {
             Monitoring.class = req.body.class;
             Monitoring.classroom = req.body.classroom;
             Monitoring.monitoringdate = req.body.monitoringdate;
+            Monitoring.monitoringhour = req.body.monitoringhour;
 
             Monitoring.update((err, monitoring) => {
               if (err) {

@@ -7,6 +7,7 @@ class Monitoring {
   static class;
   static monitorid;
   static monitoringdate;
+  static monitoringhour;
   static classroom;
 
   constructor() {}
@@ -17,6 +18,7 @@ class Monitoring {
       monitorid: this.monitorid,
       monitoringdate: this.monitoringdate,
       classroom: this.classroom,
+      monitoringhour: this.monitoringhour
     };
     db.query("INSERT INTO monitorings SET ?", newMonitoring, (err, res) => {
       if (err) {
@@ -38,7 +40,7 @@ class Monitoring {
   }
 
   static findAll(result) {
-    const query = `SELECT mns.id, mns.monitorid, mns.monitoringdate, mns.class, mns.classroom, mo.firstname, mo.lastname
+    const query = `SELECT mns.id, mns.monitorid, mns.monitoringdate, mns.monitoringhour, mns.class, mns.classroom, mo.firstname, mo.lastname
                    FROM monitorings AS mns INNER JOIN monitors as mo ON mns.monitorid = mo.id`;
     db.query(query, (err, res) => {
       if (err) {
@@ -51,6 +53,7 @@ class Monitoring {
             class: monitoring.class,
             classroom: monitoring.classroom,
             monitoringdate: monitoring.monitoringdate,
+            monitoringhour: monitoring.monitoringhour,
             monitor: {
               id: monitoring.monitorid,
               firstname: monitoring.firstname,
@@ -70,6 +73,7 @@ class Monitoring {
     const fields = [
       this.monitorid,
       this.monitoringdate,
+      this.monitoringhour,
       this.class,
       this.classroom,
       this.id,
