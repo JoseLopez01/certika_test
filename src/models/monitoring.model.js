@@ -68,7 +68,7 @@ class Monitoring {
 
   static update(result) {
     const query =
-      "UPDATE monitorings SET monitorid = ?, monitoringdate = ?, class = ?, classroom = ? WHERE id = ?";
+      "UPDATE monitorings SET monitorid = ?, monitoringdate = ?, monitoringhour = ?, class = ?, classroom = ? WHERE id = ?";
 
     const fields = [
       this.monitorid,
